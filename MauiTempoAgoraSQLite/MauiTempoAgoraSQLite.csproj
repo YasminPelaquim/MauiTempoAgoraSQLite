@@ -66,9 +66,4 @@
 		<PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="Views\" />
-	  <Folder Include="NovaPasta\" />
-	</ItemGroup>
-
 </Project>
