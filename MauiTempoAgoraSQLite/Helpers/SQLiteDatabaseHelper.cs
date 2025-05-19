@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MauiTempoAgoraSQLite.Banco
+namespace MauiTempoAgoraSQLite.Helpers
 {
-    internal class SQLiteBancodeDados
+    internal class SQLiteDatabaseHelper
     {
-            
-        }
     }
+}
