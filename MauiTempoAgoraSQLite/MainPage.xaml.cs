@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.Diagnostics;
 using MauiTempoAgoraSQLite.Models;
 using MauiTempoAgoraSQLite.Services;
 
@@ -84,9 +83,63 @@ namespace MauiAppTempoAgoraSQLite
             }
         }
 
-        private void lst_produtos_Refreshing(object sender, EventArgs e)
+        private async void lst_produtos_Refreshing(object sender, EventArgs e)
         {
+            try
+            {
+                lista.Clear();
 
+                List<Tempo> tmp = await App.Db.GetAll();
+                
+                tmp.ForEach(i => lista.Add(i));
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Ops", ex.Message, "OK");
+            }
+            finally
+            {
+                lst_produtos_IsRefreshing = false;
+            }
+        }
+
+        private async void MenuItem_Clicked(object sender, EventArgs e)
+        {
+            try
+            {
+                MenuItem selecionado = sender as MenuItem;
+
+                Tempo p = selecionado.BindingContext as Tempo;
+
+                bool confirm = await DisplayAlert("Tem Certeza?", $"Remover {p.description}?", "Sim", "Não");
+
+                if (confirm)
+                {
+                    await App.Db.Delete(p.Id);
+                    lista.Remove(p);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Ops", ex.Message, "OK");
+            }
+        }
+
+        protected async override void OnAppearing()
+        {
+            try
+            {
+                lista.Clear();
+
+                List<Tempo> tmp = await AppAction.Db.GeatAll();
+
+                tmp.ForEach(i => lista.Add(i));
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Ops", ex.Message, "OK");
+            }
         }
     }
 
