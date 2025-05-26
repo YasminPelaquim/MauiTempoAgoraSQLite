@@ -4,14 +4,17 @@
              x:Class="MauiAppTempoAgoraSQLite.MainPage">
 
     <ScrollView>
-        <VerticalStackLayout
-            Padding="30,0"
-            Spacing="25">
-            
+        <VerticalStackLayout          
             <Entry x:Name="txt_cidade" />
             <Button Text="Buscar Previsão" Clicked="Button_Clicked" />
 
             <Label x:Name="lbl_res" />
+
+            <ListView x:Name="lst_produtos"
+                      IsPullToRefreshEnabled="True"
+                      Refreshing="lst_produtos_Refreshing">
+                
+            </ListView>
 
             <WebView x:Name="wv_mapa" HeightRequest="500" />
         </VerticalStackLayout>

@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.ObjectModel;
+using System.Diagnostics;
 using MauiTempoAgoraSQLite.Models;
 using MauiTempoAgoraSQLite.Services;
 
@@ -7,11 +8,16 @@ namespace MauiAppTempoAgoraSQLite
 {
     public partial class MainPage : ContentPage
     {
+        ObservableCollection<Tempo> lista = new ObservableCollection<Tempo>();
+
+        public string cidade;
+
         int count = 0;
 
         public MainPage()
         {
             InitializeComponent();
+            lst_produtos.ItemsSource = lista;
         }
 
         private async void Button_Clicked(object sender, EventArgs e)
@@ -76,6 +82,11 @@ namespace MauiAppTempoAgoraSQLite
             {
                 await DisplayAlert("Erro: Obtenção do nome da Cidade", ex.Message, "OK");
             }
+        }
+
+        private void lst_produtos_Refreshing(object sender, EventArgs e)
+        {
+
         }
     }
 
