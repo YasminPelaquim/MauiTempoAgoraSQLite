@@ -1,8 +1,9 @@
 ﻿using System.Collections.ObjectModel;
+using MauiTempoAgoraSQLite;
 using MauiTempoAgoraSQLite.Models;
 using MauiTempoAgoraSQLite.Services;
 
-namespace MauiAppTempoAgoraSQLite
+namespace MauiTempoAgoraSQLite
 
 {
     public partial class MainPage : ContentPage
@@ -10,8 +11,6 @@ namespace MauiAppTempoAgoraSQLite
         ObservableCollection<Tempo> lista = new ObservableCollection<Tempo>();
 
         public string cidade;
-
-        int count = 0;
 
         public MainPage()
         {
@@ -87,7 +86,7 @@ namespace MauiAppTempoAgoraSQLite
         {
             try
             {
-                lista.Clear();
+                lista.Clear();                
 
                 List<Tempo> tmp = await App.Db.GetAll();
                 
@@ -96,10 +95,6 @@ namespace MauiAppTempoAgoraSQLite
             catch (Exception ex)
             {
                 await DisplayAlert("Ops", ex.Message, "OK");
-            }
-            finally
-            {
-                lst_produtos_IsRefreshing = false;
             }
         }
 
@@ -132,7 +127,7 @@ namespace MauiAppTempoAgoraSQLite
             {
                 lista.Clear();
 
-                List<Tempo> tmp = await AppAction.Db.GeatAll();
+                List<Tempo> tmp = await App.Db.GetAll();
 
                 tmp.ForEach(i => lista.Add(i));
             }

@@ -11,7 +11,7 @@ namespace MauiTempoAgoraSQLite.Services
 
             string chave = "6135072afe7f6cec1537d5cb08a5a1a2";
 
-            string url = $"https://api.openweatermap.org/data/2.5/weather?" + $"Q={cidade}&units=metric&appid={chave}";
+            string url = $"https://api.openweathermap.org/data/2.5/weather?q={cidade}&units=metric&appid={chave}";
 
             using (HttpClient client = new HttpClient())
             {

@@ -1,18 +1,17 @@
-﻿ ﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MauiAppTempoAgoraSQLite.MainPage">
+             x:Class="MauiTempoAgoraSQLite.MainPage">
 
     <ScrollView>
-        <VerticalStackLayout >
+        <VerticalStackLayout>
             <Entry x:Name="txt_cidade" />
             <Button Text="Buscar Previsão" Clicked="Button_Clicked" />
 
             <Label x:Name="lbl_res" />
 
             <ListView x:Name="lst_produtos"
-                      IsPullToRefreshEnabled="True"
-                      Refreshing="lst_produtos_Refreshing">
+                      IsPullToRefreshEnabled="True">
                 <ListView.Header>
                     <Grid ColumnDefinitions="300, 300, 300, 300"
                           BackgroundColor="{StaticResource Gray100}">
@@ -41,5 +40,4 @@
             
         </VerticalStackLayout>
     </ScrollView>
-
 </ContentPage>
