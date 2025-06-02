@@ -1,4 +1,5 @@
-﻿using SQLite;
+﻿using System.Data;
+using SQLite;
 
 namespace MauiTempoAgoraSQLite.Models
 {
@@ -7,6 +8,10 @@ namespace MauiTempoAgoraSQLite.Models
         [PrimaryKey, AutoIncrement]
 
         public int Id { get; set; }
+
+        public string Cidade { get; set; }
+
+        public DateTime DataConsulta { get; set; }
 
         public double? lon { get; set; }
 
