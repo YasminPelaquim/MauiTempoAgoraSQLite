@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using MauiTempoAgoraSQLite;
 using MauiTempoAgoraSQLite.Models;
 using MauiTempoAgoraSQLite.Services;
 
@@ -15,7 +14,7 @@ namespace MauiTempoAgoraSQLite
         public MainPage()
         {
             InitializeComponent();
-            lst_produtos.ItemsSource = lista;
+            lst_previsoes_tempo.ItemsSource = lista;
         }
 
         private async void Button_Clicked(object sender, EventArgs e)
@@ -28,6 +27,9 @@ namespace MauiTempoAgoraSQLite
 
                     if (t != null)
                     {
+                        t.Cidade = txt_cidade.Text; 
+                        t.DataConsulta = DateTime.Now;
+
                         string dados_previsao = "";
 
                         dados_previsao = $"Latitude: {t.lat} \n" +
@@ -37,15 +39,14 @@ namespace MauiTempoAgoraSQLite
                                          $"Temp Máx: {t.temp_max} \n" +
                                          $"Temp Min: {t.temp_min} \n";
 
-                        lbl_res.Text = dados_previsao;
+                        //lbl_res.Text = dados_previsao;
 
-                        string mapa = $"https://embed.windy.com/embed.html?" +
-                                      $"type=map&location=coordinates&metricRain=mm&metricTemp=°C" +
-                                      $"&metricWind=km/h&zoom=5&overlay=wind&product=ecmwf&level=surface" +
-                                      $"&lat={t.lat.ToString().Replace(",", ".")}&lon=" +
-                                      $"{t.lon.ToString().Replace(",", ".")}";
+                        await App.Db.Insert(t);
 
-            
+                        lista.Clear();
+                        App.Db.GetAll().Result.ForEach(i => lista.Add(i));
+
+
                     }
                     else
                     {
@@ -63,39 +64,16 @@ namespace MauiTempoAgoraSQLite
             }
         }
 
-        private async void GetCidade(double lat, double lon)
+        
+
+        private async void lst_previsoes_tempo_Refreshing(object sender, EventArgs e)
         {
-            try
-            {
-                IEnumerable<Placemark> places = await Geocoding.Default.GetPlacemarksAsync(lat, lon);
-
-                Placemark? place = places.FirstOrDefault();
-
-                if (place != null)
-                {
-                    txt_cidade.Text = place.Locality;
-                }
-            }
-            catch (Exception ex)
-            {
-                await DisplayAlert("Erro: Obtenção do nome da Cidade", ex.Message, "OK");
-            }
+            
         }
 
-        private async void lst_produtos_Refreshing(object sender, EventArgs e)
+        private async void lst_previsoes_tempo_ItemSelected(object sender, EventArgs e)
         {
-            try
-            {
-                lista.Clear();                
 
-                List<Tempo> tmp = await App.Db.GetAll();
-                
-                tmp.ForEach(i => lista.Add(i));
-            }
-            catch (Exception ex)
-            {
-                await DisplayAlert("Ops", ex.Message, "OK");
-            }
         }
 
         private async void MenuItem_Clicked(object sender, EventArgs e)
@@ -104,14 +82,14 @@ namespace MauiTempoAgoraSQLite
             {
                 MenuItem selecionado = sender as MenuItem;
 
-                Tempo p = selecionado.BindingContext as Tempo;
+                Tempo t = selecionado.BindingContext as Tempo;
 
-                bool confirm = await DisplayAlert("Tem Certeza?", $"Remover {p.description}?", "Sim", "Não");
+                bool confirm = await DisplayAlert("Tem Certeza?", $"Remover previsão para {t.Cidade}?", "Sim", "Não");
 
                 if (confirm)
                 {
-                    await App.Db.Delete(p.Id);
-                    lista.Remove(p);
+                    await App.Db.Delete(t.Id);
+                    lista.Remove(t);
                 }
 
             }
@@ -127,7 +105,23 @@ namespace MauiTempoAgoraSQLite
             {
                 lista.Clear();
 
-                List<Tempo> tmp = await App.Db.GetAll();
+                App.Db.GetAll().Result.ForEach(i => lista.Add(i));
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Ops", ex.Message, "OK");
+            }
+        }
+
+        private async void txt_search_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                string q = e.NewTextValue;
+
+                lista.Clear();
+
+                List<Tempo> tmp = await App.Db.Search(q);
 
                 tmp.ForEach(i => lista.Add(i));
             }

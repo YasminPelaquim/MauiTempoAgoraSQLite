@@ -30,52 +30,59 @@
             <StackLayout>
 
                 <StackLayout Orientation="Horizontal">
-                <SearchBar x:Name="txt_search"
+                    <SearchBar x:Name="txt_search"
                               HorizontalOptions="FillAndExpand"
                               Placeholder="Busca de Previsões"
                               TextChanged="txt_search_TextChanged">
-                    <SearchBar.Margin>
-                        <OnPlatform  x:TypeArguments="Thickness">
-                            <On Platform="Android" Value="-15, 0, 0, 0" />
-                            <On Platform="UWP" Value="5, 0, 5, 0" />
-                        </OnPlatform>
-                    </SearchBar.Margin>
-                </SearchBar>
-                <DatePicker />
-                <DatePicker />
+                        <SearchBar.Margin>
+                            <OnPlatform  x:TypeArguments="Thickness">
+                                <On Platform="Android" Value="-15, 0, 0, 0" />
+                                <On Platform="UWP" Value="5, 0, 5, 0" />
+                            </OnPlatform>
+                        </SearchBar.Margin>
+                    </SearchBar>
+                    <DatePicker />
+                    <DatePicker />
 
-            </StackLayout>
-                
-            <!-- parei aqui-->
+                </StackLayout>
 
-            <ListView x:Name="lst_produtos"
-                      IsPullToRefreshEnabled="True">
-                <ListView.Header>
-                    <Grid ColumnDefinitions="300, 300, 300, 300"
-                          BackgroundColor="{StaticResource Gray100}">
-                        <Label Grid.Column="0" Text="Data" Padding="5" FontAttributes="Bold" />
-                        <Label Grid.Column="1" Text="Cidade" FontAttributes="Bold" />
-                        <Label Grid.Column="2" Text="Temperatura" FontAttributes="Bold" />
-                        <Label Grid.Column="3" Text="Previsão" FontAttributes="Bold" />
-                    </Grid>
-                </ListView.Header>
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <ViewCell.ContextActions>
-                                <MenuItem Text="Remover" Clicked="MenuItem_Clicked" />
-                            </ViewCell.ContextActions>
-                            <Grid ColumnDefinitions="300, 300, 300, 300">
-                                <Label Grid.Column="0" Text="{Binding Data}" Padding="5" />
-                                <Label Grid.Column="1" Text="{Binding cidade}" />
-                                <Label Grid.Column="2" Text="{Binding temp_max}" />
-                                <Label Grid.Column="3" Text="{Binding description}" />
+                <Frame Padding="0" Margin="10" VerticalOptions="FillAndExpand">
+                    <ListView x:Name="lst_previsoes_tempo"
+                              IsPullToRefreshEnabled="True"
+                              Refreshing="lst_previsoes_tempo_Refreshing"
+                              ItemSelected="lst_previsoes_tempo_ItemSelected">
+                        <ListView.Header>
+                            <Grid ColumnDefinitions="*, *, *, *, *, *"                                  
+                                  Style="{StaticResource Key=cabecalho_listview}">
+                                <Label Grid.Column="0" Text="ID" Padding="5" FontAttributes="Bold" />
+                                <Label Grid.Column="1" Text="Cidade" Padding="5" FontAttributes="Bold" />
+                                <Label Grid.Column="2" Text="Data" Padding="5" FontAttributes="Bold" />
+                                <Label Grid.Column="3" Text="Previsão" FontAttributes="Bold" />
+                                <Label Grid.Column="4" Text="Máxima" FontAttributes="Bold" />
+                                <Label Grid.Column="5" Text="Min" FontAttributes="Bold" />
                             </Grid>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-            
+                        </ListView.Header>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <ViewCell.ContextActions>
+                                        <MenuItem Text="Remover" Clicked="MenuItem_Clicked" />
+                                    </ViewCell.ContextActions>
+                                    <Grid ColumnDefinitions="*, *, *, *, *, *">
+                                        <Label Grid.Column="0" Text="{Binding Id}" Padding="5" />
+                                        <Label Grid.Column="1" Text="{Binding cidade}" Padding="5"/>
+                                        <Label Grid.Column="2" Text="{Binding DataConsulta}" Padding="5" />
+                                        <Label Grid.Column="2" Text="{Binding temp_max}" />
+                                        <Label Grid.Column="5" Text="{Binding temp_min}" />
+                                        <Label Grid.Column="3" Text="{Binding description}" />
+                                    </Grid>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Frame>
+            </StackLayout>
+
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
