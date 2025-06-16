@@ -10,30 +10,30 @@
             </Style>
             <Style x:Key="cabecalho_listview" TargetType="Grid">
                 <Setter Property="BackgroundColor"
-                    Value="{AppThemeBinding Light={StaticResource Gray100}, 
-                                        Dark={StaticResource Primary}}" />
+                Value="{AppThemeBinding Light={StaticResource Gray100}, 
+                                    Dark={StaticResource Primary}}" />
             </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
 
     <ScrollView>
         <VerticalStackLayout
-            Padding="30,0"
-            Spacing="25">
+        Padding="30,0"
+        Spacing="25">
             <StackLayout Orientation="Horizontal">
                 <SearchBar x:Name="txt_cidade" HorizontalOptions="FillAndExpand" Margin="0, 0, 10, 0" />
                 <Button Text="Buscar Previsão" Clicked="Button_Clicked" />
             </StackLayout>
-         
+
             <Label x:Name="lbl_res" />
 
             <StackLayout>
 
                 <StackLayout Orientation="Horizontal">
                     <SearchBar x:Name="txt_search"
-                              HorizontalOptions="FillAndExpand"
-                              Placeholder="Busca de Previsões"
-                              TextChanged="txt_search_TextChanged">
+                          HorizontalOptions="FillAndExpand"
+                          Placeholder="Busca de Previsões"
+                          TextChanged="txt_search_TextChanged">
                         <SearchBar.Margin>
                             <OnPlatform  x:TypeArguments="Thickness">
                                 <On Platform="Android" Value="-15, 0, 0, 0" />
@@ -48,12 +48,12 @@
 
                 <Frame Padding="0" Margin="10" VerticalOptions="FillAndExpand">
                     <ListView x:Name="lst_previsoes_tempo"
-                              IsPullToRefreshEnabled="True"
-                              Refreshing="lst_previsoes_tempo_Refreshing"
-                              ItemSelected="lst_previsoes_tempo_ItemSelected">
+                          IsPullToRefreshEnabled="True"
+                          Refreshing="lst_previsoes_tempo_Refreshing"
+                          ItemSelected="lst_previsoes_tempo_ItemSelected">
                         <ListView.Header>
                             <Grid ColumnDefinitions="*, *, *, *, *, *"                                  
-                                  Style="{StaticResource Key=cabecalho_listview}">
+                              Style="{StaticResource Key=cabecalho_listview}">
                                 <Label Grid.Column="0" Text="ID" Padding="5" FontAttributes="Bold" />
                                 <Label Grid.Column="1" Text="Cidade" Padding="5" FontAttributes="Bold" />
                                 <Label Grid.Column="2" Text="Data" Padding="5" FontAttributes="Bold" />
@@ -85,4 +85,5 @@
 
         </VerticalStackLayout>
     </ScrollView>
+
 </ContentPage>

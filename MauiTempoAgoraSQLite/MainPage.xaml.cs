@@ -9,7 +9,6 @@ namespace MauiTempoAgoraSQLite
     {
         ObservableCollection<Tempo> lista = new ObservableCollection<Tempo>();
 
-        public string cidade;
 
         public MainPage()
         {

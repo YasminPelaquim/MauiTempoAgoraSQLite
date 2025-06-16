@@ -27,7 +27,7 @@ namespace MauiTempoAgoraSQLite
         {
             InitializeComponent();
 
-            MainPage = new AppShell();
+            //MainPage = new AppShell();
         }
 
         protected override Window CreateWindow(IActivationState? activationState)
